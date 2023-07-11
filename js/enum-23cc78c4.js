@@ -1,0 +1,1 @@
+var a=(r=>(r.privacy="privacy",r.serve="serve",r.rule="rule",r))(a||{}),s=(r=>(r.privacy="隐私协议",r.serve="服务协议",r.rule="详细规则",r))(s||{}),e=(r=>(r["update-password"]="update-password",r["forget-password"]="forget-password",r))(e||{}),p=(r=>(r["update-password"]="修改密码",r["forget-password"]="忘记密码",r))(p||{});export{a as P,p as T,e as V,s as a};
