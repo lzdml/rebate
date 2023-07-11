@@ -3,7 +3,7 @@ import { getToken } from '/@/utils/auth';
 
 // const { VITE_GLOB_APP_TITLE } = getAppEnvConfig();
 
-const whiteList = ['/login', '/search', '/secure-auth'];
+const whiteList = ['/login', '/search', '/secure-auth', '/protocol'];
 
 router.beforeEach(async (to, from, next) => {
   const hasToken = getToken();

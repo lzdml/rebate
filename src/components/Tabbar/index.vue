@@ -33,6 +33,8 @@
   import FindClassIcon from '/@/assets/images/find_class.png';
   import MyActiveIcon from '/@/assets/images/my_active.png';
   import MyIcon from '/@/assets/images/my.png';
+  import ShareIcon from '/@/assets/images/share.png';
+  import ShareActiveIcon from '/@/assets/images/share_active.png';
   const active = ref(0);
 
   const tabBarIcons = ref([
@@ -52,8 +54,8 @@
     },
     {
       id: 2,
-      activeIcon: FindClassActiveIcon,
-      inactiveIcon: FindClassIcon,
+      activeIcon: ShareActiveIcon,
+      inactiveIcon: ShareIcon,
       name: '分享',
       to: '/share',
     },

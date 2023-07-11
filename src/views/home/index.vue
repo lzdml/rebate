@@ -157,7 +157,7 @@
           class="filter-container text-[#666] bg-c_grey_l pb-3">
           <div class="flex items-center gap-x-3">
             <div
-              class="flex justify-center items-center px-1.5 text-c_theme/80 text-xs font-bold rounded-md h-7 bg-c_theme/10"
+              class="flex justify-center items-center px-1.5 text-c_theme/80 text-xs font-bold rounded-md h-7 bg-[#fff7ee]"
               border="~ solid text-c_theme/80">
               {{ getCurrentState }}
               <img
@@ -169,7 +169,7 @@
             <div class="flex items-center gap-x-3">
               <div
                 class="flex justify-center items-center px-1.5 text-xs rounded-md h-7 bg-white border border-solid border-transparent"
-                :class="{ 'text-c_theme/80 bg-[#fff7ee] font-bold border border-solid !border-c_theme/80': v.checked }"
+                :class="{ 'text-c_theme/80 !bg-[#fff7ee] font-bold border border-solid !border-c_theme/80': v.id === checkFilterId }"
                 v-for="v in filterList"
                 :key="v.id"
                 @click="changeSelect(v)">
@@ -206,17 +206,24 @@
           title="筛选条件"
           :border="false">
           <template #right_slot>
-            <div>重置</div>
+            <div
+              v-feed-touch
+              @click="reset">
+              重置
+            </div>
           </template>
         </custom-header>
 
         <div class="flex items-center gap-x-3 my-3 text-[#6A6A6A]">
           <div
-            class="flex justify-center items-center text-c_theme/80 text-[14px] font-bold rounded-md px-3 py-1.5 bg-c_theme/10"
-            border="~ solid text-c_theme/80">
+            class="flex justify-center items-center text-c_theme/80 text-[14px] font-bold rounded-md px-3 py-1.5 bg-[#fff7ee]"
+            border="~ solid text-c_theme/80"
+            @click="toggleRecommends">
             {{ getCurrentState }}
             <img
-              class="w-3 h-3 ml-1"
+              class="w-3 h-3 ml-1 origin-center"
+              transition="all duration-50 ease-linear"
+              :class="{ 'transition-transform rotate-180': showRecommend }"
               src="/@/assets/images/down-arrow.png"
               alt="" />
           </div>
@@ -224,11 +231,28 @@
           <div class="flex items-center gap-x-3">
             <div
               class="flex justify-center items-center px-3 py-1.5 text-[14px] rounded-md bg-[#f7f7f7] border border-solid border-transparent"
-              :class="{ 'text-c_theme/80 bg-[#fff7ee] font-bold border border-solid !border-c_theme/80': v.checked }"
+              :class="{ 'text-c_theme/80 !bg-[#fff7ee] font-bold border border-solid !border-c_theme/80': v.id === checkFilterId1 }"
               v-for="v in filterList"
               :key="v.id"
-              @click="changeSelect(v)">
+              @click="changeSelect1(v)">
               {{ v.name }}
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-3"
+          v-show="showRecommend">
+          <h4 class="text-base font-bold text-[#000216] leading-5.5 mb-2.5">排序方式</h4>
+
+          <div class="flex items-center gap-x-3 text-[#6a6a6a] text-[14px]">
+            <div
+              class="flex justify-center items-center px-3 py-1.5 text-[14px] rounded-md bg-[#f7f7f7] border border-solid border-transparent"
+              v-for="item in recommends"
+              :class="{ 'text-c_theme/80 bg-[#fff7ee] font-bold border border-solid !border-c_theme/80': item.id === recommendId }"
+              @click="changeRecommend(item)"
+              :key="item.id">
+              {{ item.name }}
             </div>
           </div>
         </div>
@@ -239,7 +263,9 @@
           <div class="flex items-center gap-x-3 text-[#6a6a6a] text-[14px]">
             <div
               class="flex justify-center items-center px-3 py-1.5 text-[14px] rounded-md bg-[#f7f7f7] border border-solid border-transparent"
-              v-for="item in platform"
+              v-for="item in platforms"
+              :class="{ 'text-c_theme/80 bg-[#fff7ee] font-bold border border-solid !border-c_theme/80': item.id === checkedPlatformId }"
+              @click="changePlatform(item)"
               :key="item.id">
               {{ item.name }}
             </div>
@@ -252,6 +278,8 @@
             <div
               class="flex justify-center items-center px-3 py-1.5 text-[14px] rounded-md bg-[#f7f7f7] border border-solid border-transparent"
               v-for="item in meals"
+              :class="{ 'text-c_theme/80 bg-[#fff7ee] font-bold border border-solid !border-c_theme/80': item.id === checkedMealId }"
+              @click="changeMeal(item)"
               :key="item.id">
               {{ item.name }}
             </div>
@@ -261,10 +289,16 @@
         <div class="flex items-center my-3 mt-5 gap-x-3">
           <button
             class="flex-1 border-none text-[14px] py-3 rounded-md"
-            v-feed-touch="'bg-[rgba(239,239,239,0.8)] text-rgba(44,62,80,0.8)'">
+            v-feed-touch
+            @click="reset">
             清空
           </button>
-          <button class="flex-1 border-none text-[14px] py-3 rounded-md text-white bg-c_theme/80">确定</button>
+          <button
+            v-feed-touch
+            @click="confirmFilter"
+            class="flex-1 border-none text-[14px] py-3 rounded-md text-white bg-c_theme/80">
+            确定
+          </button>
         </div>
       </div>
     </van-popup>
@@ -279,6 +313,29 @@
   const router = useRouter();
 
   const { banners, menus, navs, recommends, filterLists, meals, platform } = constant;
+
+  const platforms = ref(platform);
+  const checkedPlatformId = ref();
+  function changePlatform(item) {
+    checkedPlatformId.value = item.id;
+  }
+
+  const checkedMealId = ref();
+  function changeMeal(item) {
+    checkedMealId.value = item.id;
+  }
+
+  function reset() {
+    checkedMealId.value = -1;
+    checkedPlatformId.value = -1;
+    checkFilterId.value = -1;
+    checkFilterId1.value = -1;
+    recommendId.value = recommends[0].id;
+  }
+
+  async function confirmFilter() {
+    onClickOverlay(false);
+  }
 
   const activeId = menus[0].id;
 
@@ -297,10 +354,23 @@
     }
     return recommends[0].name;
   });
+  const changeRecommend = (item) => {
+    recommendId.value = item.id;
+  };
+  const { loading: showRecommend, setLoading: setRecommends, toggle } = useLoading({ initValue: false });
+  const toggleRecommends = () => {
+    toggle();
+  };
 
   const filterList = ref(filterLists);
+  const checkFilterId = ref();
   const changeSelect = (item) => {
-    item.checked = !item.checked;
+    checkFilterId.value = item.id;
+  };
+
+  const checkFilterId1 = ref();
+  const changeSelect1 = (item) => {
+    checkFilterId1.value = item.id;
   };
 
   const products = ref(new Array(10).fill({ id: 1, name: '黄焖鸡米饭' }).map((product, index) => product.id + index));
