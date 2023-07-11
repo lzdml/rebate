@@ -16,7 +16,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const viteEnv = wrapperEnv(env);
 
   return {
-    base: '/',
+    base: '/rebate/',
     resolve: {
       alias: [
         {
