@@ -101,7 +101,7 @@
       setTimeout(() => {
         // #capture 就是我们要获取截图对应的 DOM 元素选择器
         html2canvas(container, {
-          width: window.innerWidth - 40,
+          width: window.innerWidth > 750 ? 750 : window.innerWidth - 40,
           height: container.offsetHeight,
           useCORS: true, // 【重要】开启跨域配置
           scale: window.devicePixelRatio < 3 ? window.devicePixelRatio : 2,

@@ -191,7 +191,7 @@
       </van-sticky>
 
       <product
-        :list="products"
+        :list="filterProduct"
         @handle-item="onChangeItem" />
     </div>
 
@@ -309,6 +309,8 @@
   import { useStaticImgUrl } from '/@/utils/index';
   import { useGeolocation, useLoading } from '/@/hooks';
   import constant from './constant';
+  import Message from '/@/utils/msg';
+  const message = new Message();
 
   const router = useRouter();
 
@@ -373,8 +375,17 @@
     checkFilterId1.value = item.id;
   };
 
-  const products = ref(new Array(10).fill({ id: 1, name: '黄焖鸡米饭' }).map((product, index) => product.id + index));
+  const fill = { id: 1, name: '黄焖鸡米饭' };
+  const products = ref(new Array(10).fill(fill).map((product, index) => ({ ...fill, id: index + 1, isOver: Math.random() > 0.5 })));
   console.log('products :>> ', products);
+
+  const filterProduct = computed({
+    get: () => {
+      return products.value.filter((item) => (checked.value ? !item.isOver : item.id != null));
+    },
+    set: (val) => {},
+  });
+  console.log('filterProduct :>> ', filterProduct);
 
   const handleDin = (item) => {
     activeNavId.value = item.id;
@@ -387,6 +398,13 @@
   };
 
   const onChangeItem = (item) => {
+    if (item.isOver) {
+      message.setOption({
+        type: 'error',
+        message: '当前商品已售罄',
+      });
+      return;
+    }
     router.push({
       path: '/detail',
       query: {

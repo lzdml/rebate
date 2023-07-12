@@ -167,17 +167,112 @@
 
     <div
       class="fixed left-1/2 transition-transform -translate-x-1/2 max-w-187.5 bottom-0 w-full h-auto px-3 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] z-20 bg-white flex items-center gap-x-3">
-      <button class="border-none flex-2 px-6 py-3 rounded-full text-[#6a6a6a]">前往首页</button>
-      <button class="border-none flex-1 px-6 py-3 rounded-full bg-c_theme/80 text-white">剩余1份 立即参与</button>
+      <button
+        class="border-none flex-2 px-6 py-3 rounded-full text-[#6a6a6a]"
+        @click="router.back()">
+        前往首页
+      </button>
+      <button
+        class="border-none flex-1 px-6 py-3 rounded-full bg-c_theme/80 text-white"
+        @click="joinNow">
+        剩余1份 立即参与
+      </button>
     </div>
+    <custom-modal
+      :show="showConfirm"
+      class="!rounded-md !w-9/10 !p-0">
+      <div class="relative">
+        <custom-header
+          title="报名须知"
+          :show-left="false"
+          :is-fixed="false"
+          class="rounded-lt-md rounded-rt-md" />
+        <div
+          class="absolute right-4 top-2.5"
+          @click="setConfirm(false)">
+          <van-icon
+            name="cross"
+            size="22px"
+            color="#ccc" />
+        </div>
+
+        <div class="py-4 px-8">
+          <div class="flex gap-x-3 mb-2">
+            <p class="flex-shrink-0 w-4 h-4 flex items-center justify-center bg-c_theme/80 text-white rounded-full text-xs font-bold">1</p>
+
+            <div class="flex-1 w-0 text-xs text-[#999]">
+              下单前核对商家活动平台及名称地址是否一致，
+              <span class="text-c_theme font-bold">下错平台或者店铺会导致无法获得返利哦～</span>
+            </div>
+          </div>
+          <div class="flex gap-x-3 mb-3">
+            <p class="flex-shrink-0 w-4 h-4 flex items-center justify-center bg-c_theme/80 text-white rounded-full text-xs font-bold">2</p>
+
+            <div class="flex-1 w-0 text-xs text-[#999]">
+              <span class="text-c_theme font-bold">报名后一小时内上传订单编号及订单截图</span>
+              ，超时名额会被取消哦～
+            </div>
+          </div>
+          <div class="flex gap-x-3 mb-3">
+            <p class="flex-shrink-0 w-4 h-4 flex items-center justify-center bg-c_theme/80 text-white rounded-full text-xs font-bold">3</p>
+
+            <div class="flex-1 w-0 text-xs text-[#999]">
+              <span class="text-c_theme font-bold">报名后一小时内上传订单编号及订单截图</span>
+              ，超时名额会被取消哦～
+            </div>
+          </div>
+          <div class="flex gap-x-3 mb-3">
+            <p class="flex-shrink-0 w-4 h-4 flex items-center justify-center bg-c_theme/80 text-white rounded-full text-xs font-bold">2</p>
+
+            <div class="flex-1 w-0 text-xs text-[#999]">
+              每单限点
+              <span class="text-c_theme font-bold">一瓶饮料酒水</span>
+              ，饮品店除外
+            </div>
+          </div>
+        </div>
+
+        <div class="van-hairline--top flex items-center">
+          <button
+            v-feed-touch
+            class="h-12 w-1/3 border-none van-hairline--right rounded-bl-md text-[#6a6a6a]"
+            @click="onClickConfirm(ConfirmStatus.apply)">
+            只报名
+          </button>
+          <button
+            v-feed-touch
+            class="h-12 w-2/3 border-none rounded-br-md text-white bg-c_theme/80"
+            @click="onClickConfirm(ConfirmStatus['apply-red'])">
+            领红包并确定报名
+          </button>
+        </div>
+      </div>
+    </custom-modal>
   </div>
 </template>
 
 <script setup lang="ts" name="Details">
   import { useRouter } from 'vue-router';
   import copy from '/@/utils/copy';
+  import { useLoading } from '/@/hooks';
 
   const router = useRouter();
+
+  const { loading: showConfirm, setLoading: setConfirm } = useLoading({ initValue: true });
+
+  async function joinNow() {
+    setConfirm(true);
+  }
+
+  enum ConfirmStatus {
+    'apply',
+    'apply-red',
+  }
+
+  function onClickConfirm(type: ConfirmStatus) {
+    setConfirm(false);
+    router.push('/order-detail?id=' + type);
+  }
 </script>
 
 <style scoped>

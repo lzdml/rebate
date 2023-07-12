@@ -3,6 +3,7 @@
     <product-item
       class="mb-2"
       @click="emit('handleItem', item)"
+      :item="item"
       v-for="item in list"
       :key="item.id" />
   </div>
@@ -10,11 +11,7 @@
 
 <script setup lang="ts">
   import ProductItem from './product-item.vue';
-
-  interface ProductItemModel {
-    id: number;
-    [key: string]: unknown;
-  }
+  import { ProductItemModel } from './types';
 
   defineProps<{
     list: Array<ProductItemModel>;

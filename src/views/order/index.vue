@@ -29,7 +29,7 @@
                     src="/@/assets/images/banner.webp"
                     alt="" />
                 </div>
-                <div class="ml-3">
+                <div class="ml-3 flex-1">
                   <div class="text-[#333333] font-bold">张威少东北水饺(浙江医院店)</div>
                   <div class="flex items-center gap-x-2 mt-1">
                     <p
@@ -43,11 +43,37 @@
                   <div class="flex items-center whitespace-nowrap text-xs text-[#777777] mt-2">下单时间: 2023-03-04 12:12:21</div>
                   <div class="flex items-center whitespace-nowrap text-xs text-c_theme/80 mt-1">取消原因: 超时取消</div>
                 </div>
+
+                <div
+                  v-if="item.id === 3"
+                  class="flex items-center text-xs text-[#ccc]">
+                  已取消
+                </div>
+                <div
+                  v-if="v % 2 == 0"
+                  class="flex items-center text-xs text-c_theme/80">
+                  已提交
+                </div>
               </div>
             </div>
 
             <div class="van-hairline--top"></div>
-            <div class="w-full text-center p-3 font-bold text-base">已取消</div>
+            <div class="w-full text-right p-3 font-bold text-xs">
+              <button
+                v-feed-touch
+                class="rounded-md border-none px-3 py-2 bg-transparent text-c_theme/80"
+                border="~ solid c_theme/60">
+                取消订单
+              </button>
+              <button
+                v-feed-touch
+                class="inline-flex items-center rounded-md border-none ml-3 px-3 py-2 bg-c_theme/80 text-white">
+                上传
+                <CountdownTimer
+                  class="ml-1"
+                  :time="10000" />
+              </button>
+            </div>
           </div>
         </div>
       </van-tab>

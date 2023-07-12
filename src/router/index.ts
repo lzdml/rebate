@@ -142,7 +142,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('/@/views/wallet/index.vue'),
     meta: { title: '钱包详情', keepAlive: false },
   },
-
+  {
+    path: '/order-detail',
+    name: 'OrderDetail',
+    component: () => import('/@/views/order-detail/index.vue'),
+    meta: { title: '提交订单及反馈信息', keepAlive: false },
+  },
   ...ERROR_ROUTES,
 ];
 

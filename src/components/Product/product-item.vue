@@ -50,12 +50,12 @@
         <div>
           <button
             class="border-none w-16 h-8 flex justify-center items-center rounded-full text-[13px] font-bold text-[#cbcbcb] bg-[#f0f0f0]"
-            v-if="random">
+            v-if="item.isOver">
             抢光了
           </button>
           <button
             class="text-white border-none w-16 h-8 flex justify-center items-center rounded-full text-[13px] font-bold bg-c_theme/80"
-            v-if="!random">
+            v-if="!item.isOver">
             去抢单
           </button>
         </div>
@@ -65,7 +65,10 @@
 </template>
 
 <script setup lang="ts">
-  const random = ~~(Math.random() > 0.5);
+  import { ProductItemModel } from './types';
+  defineProps<{
+    item: ProductItemModel;
+  }>();
 </script>
 
 <style scoped></style>
