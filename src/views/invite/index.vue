@@ -72,6 +72,7 @@
         <div class="px-6 text-center pb-4">
           <button
             v-feed-touch
+            @click="router.push('/share')"
             class="w-full h-11 border-none text-white text-[14px] bg-c_theme/80 rounded-md">
             立即分享
           </button>

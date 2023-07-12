@@ -91,6 +91,33 @@
         </div>
       </div>
 
+      <div class="bg-white rounded-xl mb-4 mt-4">
+        <div
+          class="text-base font-bold text-black py-3 px-4 flex items-center justify-between"
+          border="~ solid #eeeeee l-0 t-0 r-0"
+          ref="inviteRef"
+          @click="handleWallet">
+          <div>我的钱包</div>
+          <div class="flex items-center text-xs font-400">
+            <p class="text-[#666]">查看详情</p>
+            <img
+              class="w-5 image-render-pixel object-center object-contain"
+              src="/@/assets/images/right_arrow.png"
+              alt="" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3">
+          <div
+            class="text-center px-6 py-3 flex flex-col items-center"
+            v-for="item in walletMenu"
+            :key="item.id">
+            <p class="leading-6 text-xl mb-2 font-bold text-black">0.00</p>
+            <p class="text-xs font-400 text-black whitespace-nowrap">{{ item.name }}</p>
+          </div>
+        </div>
+      </div>
+
       <div class="rounded-xl bg-white">
         <div
           class="pl-4 pr-5 h-14 flex items-center"
@@ -177,6 +204,12 @@
     },
   ];
 
+  const walletMenu = [
+    { id: 40, name: '余额', num: 100 },
+    { id: 41, name: '积分', num: 100 },
+    { id: 42, name: '明细', num: 100 },
+  ];
+
   const menuList = [
     {
       id: 4,
@@ -184,6 +217,13 @@
       name: '我的收藏',
       path: '/collect',
       ref: 'collectRef',
+    },
+    {
+      id: 5,
+      icon: 'settle',
+      name: '商家入驻',
+      path: '/settle',
+      ref: 'settleRef',
     },
     {
       id: 1,
@@ -221,6 +261,10 @@
     } else {
       navigateTo(item.path);
     }
+  }
+
+  function handleWallet() {
+    navigateTo('/wallet');
   }
 
   const inviteRef = ref<HTMLElement | null>(null);

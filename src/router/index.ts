@@ -130,6 +130,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('/@/views/details/index.vue'),
     meta: { title: '商家信息', keepAlive: false },
   },
+  {
+    path: '/settle',
+    name: 'Settle',
+    component: () => import('/@/views/settle/index.vue'),
+    meta: { title: '商家入驻', keepAlive: false },
+  },
+  {
+    path: '/wallet',
+    name: 'Wallet',
+    component: () => import('/@/views/wallet/index.vue'),
+    meta: { title: '钱包详情', keepAlive: false },
+  },
 
   ...ERROR_ROUTES,
 ];

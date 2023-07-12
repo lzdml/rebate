@@ -1,5 +1,7 @@
 <template>
-  <div class="max-w-187.5 mx-auto h-full">
+  <div
+    class="max-w-187.5 mx-auto h-full"
+    id="layout-container">
     <router-view v-slot="{ Component, route }">
       <transition
         name="fade"
