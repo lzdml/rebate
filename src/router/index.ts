@@ -156,7 +156,6 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    console.log('savedPosition :>> ', savedPosition);
     if (savedPosition) {
       // 如果存在保存的位置，则恢复到之前滚动的位置
       return { ...savedPosition, behavior: 'instant' };

@@ -422,7 +422,7 @@
     router.push('/order');
   }
 
-  const themeVars = reactive({});
+  // const themeVars = reactive({});
 </script>
 
 <style scoped lang="less">

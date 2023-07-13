@@ -76,6 +76,7 @@
               </button>
               <button
                 v-feed-touch
+                @click="updateOtherInfo(item)"
                 class="inline-flex items-center rounded-md border-none ml-3 px-3 py-2 bg-c_theme/80 text-white">
                 上传
                 <CountdownTimer
@@ -91,12 +92,23 @@
 </template>
 
 <script setup lang="ts" name="Order">
+  import { router } from '/@/router';
+
   const menus = [
     { id: 1, name: '进行中' },
     { id: 2, name: '已返现' },
     { id: 3, name: '取消&过期' },
   ];
   const activeId = ref(menus[0].id);
+
+  async function updateOtherInfo(item) {
+    router.push({
+      path: '/order-detail',
+      query: {
+        id: item.id,
+      },
+    });
+  }
 </script>
 
 <style scoped></style>

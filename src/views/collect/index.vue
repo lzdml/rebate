@@ -46,6 +46,7 @@
 </template>
 
 <script setup lang="ts" name="Collect">
+  import copy from '/@/utils/copy';
   const router = useRouter();
 </script>
 

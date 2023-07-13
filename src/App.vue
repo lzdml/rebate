@@ -1,15 +1,18 @@
 <template>
   <router-view />
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import wx from 'weixin-js-sdk';
+  provide('wx', wx);
+</script>
 
 <style>
-  @font-face {
+  /* @font-face {
     font-family: "Ali_HT";
     src: url('./assets/fonts/heiti.ttf');
     font-weight: normal;
     font-style: normal;
-  }
+  } */
 
   html,
   body {

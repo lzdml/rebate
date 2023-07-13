@@ -8,7 +8,6 @@ const whiteList = ['/login', '/search', '/secure-auth', '/protocol'];
 router.beforeEach(async (to, from, next) => {
   const hasToken = getToken();
   // 登录未过期或打开页面不需要登录
-  console.log('to.path :>> ', to.path);
   if (hasToken) {
     if (to.path === '/login') {
       next(from.path);

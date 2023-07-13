@@ -51,6 +51,7 @@
           <div
             class="w-1/5 inline-flex flex-col justify-center items-center relative"
             v-for="v in item.content"
+            @click="openSingleApp(v)"
             :key="v.id">
             <img
               class="w-10 h-10 image-render-pixel rounded-md"
@@ -307,12 +308,15 @@
 
 <script setup lang="ts" name="Home">
   import { useStaticImgUrl } from '/@/utils/index';
-  import { useGeolocation, useLoading } from '/@/hooks';
+  import { useLoading } from '/@/hooks';
+  // useGeolocation
   import constant from './constant';
   import Message from '/@/utils/msg';
   const message = new Message();
 
   const router = useRouter();
+  const wx = inject('wx');
+  console.log('wx :>> ', wx);
 
   const { banners, menus, navs, recommends, filterLists, meals, platform } = constant;
 
@@ -341,8 +345,8 @@
 
   const activeId = menus[0].id;
 
-  const { latitude, longitude, error, desc } = useGeolocation();
-  console.log('object :>> ', latitude, longitude, error, desc);
+  // const { latitude, longitude, error, desc } = useGeolocation();
+  // console.log('object :>> ', latitude, longitude, error, desc);
   const checked = ref(false);
   const isLoading = ref(false);
 
@@ -377,7 +381,6 @@
 
   const fill = { id: 1, name: '黄焖鸡米饭' };
   const products = ref(new Array(10).fill(fill).map((product, index) => ({ ...fill, id: index + 1, isOver: Math.random() > 0.5 })));
-  console.log('products :>> ', products);
 
   const filterProduct = computed({
     get: () => {
@@ -385,7 +388,6 @@
     },
     set: (val) => {},
   });
-  console.log('filterProduct :>> ', filterProduct);
 
   const handleDin = (item) => {
     activeNavId.value = item.id;
@@ -418,6 +420,22 @@
       path,
       query,
     });
+  };
+
+  const openSingleApp = (item) => {
+    console.log('item :>> ', item);
+    // wx.navigateToMiniProgram({
+    //   appId: 'wxece3a9a4c82f58c9',
+    //   path: 'ele-recommend-price/pages/guest/index?inviterId=782101a9&chInfo=ch_wechat_chsub_CopyLink&_ltracker_f=tjyj1_wx_fuceng',
+    //   envVersion: 'release',
+    //   success: (res) => {
+    //     // 打开成功
+    //     console.log('打开成功', res);
+    //   },
+    //   fail: (err) => {
+    //     console.log(err);
+    //   },
+    // });
   };
 </script>
 
