@@ -180,7 +180,7 @@
     </div>
     <custom-modal
       :show="showConfirm"
-      class="!rounded-md !w-9/10 !p-0">
+      class="!rounded-md !w-9/10 !max-w-100 !p-0">
       <div class="relative">
         <custom-header
           title="报名须知"

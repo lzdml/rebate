@@ -340,7 +340,7 @@
 
     <CustomModal
       :show="showContactState"
-      class="!w-9/10 !rounded-md relative">
+      class="!w-9/10 !max-w-100 !rounded-md relative">
       <div>
         <div
           class="absolute right-4 top-4.5"

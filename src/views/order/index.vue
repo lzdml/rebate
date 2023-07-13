@@ -50,15 +50,24 @@
                   已取消
                 </div>
                 <div
-                  v-if="v % 2 == 0"
+                  v-if="v % 2 == 0 && item.id != 2"
                   class="flex items-center text-xs text-c_theme/80">
                   已提交
+                </div>
+                <div
+                  v-if="item.id == 2"
+                  class="flex items-center text-xs text-c_theme/80">
+                  已返现
                 </div>
               </div>
             </div>
 
-            <div class="van-hairline--top"></div>
-            <div class="w-full text-right p-3 font-bold text-xs">
+            <div
+              class="van-hairline--top"
+              v-if="item.id == 1"></div>
+            <div
+              class="w-full text-right p-3 font-bold text-xs"
+              v-if="item.id == 1">
               <button
                 v-feed-touch
                 class="rounded-md border-none px-3 py-2 bg-transparent text-c_theme/80"

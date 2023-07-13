@@ -58,6 +58,14 @@
                 placeholder="请输入你的姓名" />
             </div>
           </div>
+
+          <div class="p-4">
+            <button
+              v-feed-touch
+              class="border-none text-white bg-c_theme/80 w-full h-12 rounded-md">
+              提交
+            </button>
+          </div>
         </div>
 
         <div
