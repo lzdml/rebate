@@ -98,8 +98,17 @@
         <div class="mb-3">
           <p class="font-bold text-[14px]">先领红包，再去下单更优惠哦～</p>
           <div class="flex items-center gap-x-3 mt-1">
-            <button class="border-none px-3 py-2 text-xs rounded-md text-[#6a6a6a]">立即领取外卖红包</button>
-            <button class="border-none px-3 py-2 text-xs rounded-md bg-c_theme/80 text-white">一键进店下单</button>
+            <button
+              v-feed-touch
+              class="border-none px-3 py-2 text-xs rounded-md text-[#6a6a6a]">
+              立即领取外卖红包
+            </button>
+            <button
+              v-feed-touch
+              @click="test"
+              class="border-none px-3 py-2 text-xs rounded-md bg-c_theme/80 text-white">
+              一键进店下单
+            </button>
           </div>
         </div>
       </div>
@@ -258,7 +267,7 @@
 
   const router = useRouter();
 
-  const { loading: showConfirm, setLoading: setConfirm } = useLoading({ initValue: true });
+  const { loading: showConfirm, setLoading: setConfirm } = useLoading({ initValue: false });
 
   async function joinNow() {
     setConfirm(true);
@@ -272,6 +281,10 @@
   function onClickConfirm(type: ConfirmStatus) {
     setConfirm(false);
     router.push('/order-detail?id=' + type);
+  }
+
+  function test() {
+    window.location.href = 'weixin://';
   }
 </script>
 
